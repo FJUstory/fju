@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心靈共振播放器</title>
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: black; color: yellow; display: flex; justify-content: center; align-items: center; cursor: pointer; overflow: hidden; font-family: "Microsoft JhengHei", sans-serif; }
+        .instruction { font-size: 5rem; font-weight: bold; text-align: center; line-height: 1.5; }
+        .sub-text { font-size: 1.5rem; font-weight: normal; color: #aaa; }
+    </style>
+</head>
+<body>
+    <div class="instruction">
+        <span id="cardName">讀取中...</span><br>
+        <span class="sub-text">(輕點螢幕開啟共振)</span>
+    </div>
+    <audio id="myAudio"></audio>
+
+    <script>
+        // 1. 自動從網址抓取參數 (例如 ?v=海)
+        const urlParams = new URLSearchParams(window.location.search);
+        const cardValue = urlParams.get('v') || "心靈共振"; 
+
+        // 2. 將畫面上的文字更換
+        document.getElementById('cardName').innerText = cardValue;
+
+        // 3. 設定音檔路徑 (自動對應：名稱.mp3)
+        const audio = document.getElementById("myAudio");
+        audio.src = cardValue + ".mp3";
+
+        // 4. 點擊播放功能
+        document.body.onclick = function() {
+            audio.play().catch(e => console.log("播放失敗，請檢查音檔是否存在"));
+            document.querySelector('.instruction').innerHTML = "正在播放...<br>" + cardValue;
+        };
+    </script>
+</body>
+</html>
